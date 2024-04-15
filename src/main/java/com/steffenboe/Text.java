@@ -21,9 +21,13 @@ class Text {
     }
 
     int wordCount() throws IOException {
-        List<String> words = new ArrayList<>(splitContent());
+        return getWords().size();
+    }
+
+    private List<String> getWords() throws IOException {
+        ArrayList<String> words = new ArrayList<>(splitContent());
         removeAllStopwords(words);
-        return words.size();
+        return words;
     }
 
     private void removeAllStopwords(List<String> words) throws IOException {
@@ -41,9 +45,12 @@ class Text {
     }
 
     int wordCountUnique() throws IOException {
-        ArrayList<String> words = new ArrayList<>(splitContent());
-        removeAllStopwords(words);
-        return new HashSet<>(words).size();
+        return new HashSet<>(getWords()).size();
+    }
+
+    double averageCharacters() throws IOException {
+        int totalCharacters = getWords().stream().mapToInt(word -> word.length()).sum();
+        return (double) totalCharacters / getWords().size();
     }
     
 }

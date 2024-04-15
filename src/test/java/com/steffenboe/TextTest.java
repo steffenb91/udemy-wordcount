@@ -28,4 +28,10 @@ class TextTest {
 		Text text = new Text("Humpty-Dumpty sat on a wall. Humpty-Dumpty had a great fall.");
 		assertThat(text.wordCountUnique(), is(8));
 	}
+
+	@Test
+	void shouldCalculateAvgCharacters() throws IOException {
+		Text text = new Text("Mary had a little lamb");
+		assertThat(text.averageCharacters(), is(3.6));
+	}
 }
