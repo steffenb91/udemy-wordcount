@@ -23,19 +23,24 @@ public class WordCountTest {
     @AfterEach
     void resetOut() {
         System.setOut(System.out);
-        bytes = null;
     }
 
     @Test
     void shouldCountWordsFromCmdLine() {
         Main.main(new String[] { "Mary had a little lamb" });
-        assertThat(bytes.toString(), is("Number of words: 5\r\n"));
+        assertThat(bytes.toString().strip(), is("Number of words: 5, unique: 5"));
     }
 
     @Test
     void shouldIgnoreStopWords () {
         Main.main(new String[]{ "Mary had a little lamb", "src/test/resources/stopwords.txt"});
-        assertThat(bytes.toString(), is("Number of words: 4\r\n"));
+        assertThat(bytes.toString().strip(), is("Number of words: 4, unique: 4"));
+    }
+
+    @Test
+    void shouldCountUnique() {
+        Main.main(new String[] { "Humpty-Dumpty sat on a wall. Humpty-Dumpty had a great fall." });
+        assertThat(bytes.toString().strip(), is("Number of words: 10, unique: 8"));
     }
 
 }

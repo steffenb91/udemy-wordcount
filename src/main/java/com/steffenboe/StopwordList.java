@@ -1,20 +1,24 @@
 package com.steffenboe;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.List;
 
-class StopwordList {
+interface StopwordList {
 
-    private File file;
+    List<String> stopWords() throws IOException;
 
-    public StopwordList(File file) {
-        this.file = file;
+    class FakeStopWordList implements StopwordList {
+
+        private List<String> fakeStopWords = new ArrayList<>();
+
+        FakeStopWordList(String... stopWords){
+            this.fakeStopWords = List.of(stopWords);
+        }
+
+        @Override
+        public List<String> stopWords() throws IOException {
+            return fakeStopWords;
+        }
     }
-
-    public List<String> stopWords() throws IOException {
-        return Files.readAllLines(file.toPath());
-    }
-    
 }
